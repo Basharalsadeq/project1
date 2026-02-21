@@ -1,194 +1,220 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dubai Duty Free Tennis - Guess the Balls</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-      <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="logo">
-        <!-- Replace with real logo -->
-        <img src="DDF.jpg" alt="Logo" />
-        <span>Dubai Duty Free Tennis</span>
-      </div>
+    <style>
+        /* --- General Layout --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+        }
 
-     <!-- <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Competition</a></li>
-        <li><a href="#">Prizes</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </div>-->
-  </nav>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            background-color: #002d62;
+            padding: 10px 20px;
+            color: white;
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo img {
+            height: 40px;
+            border-radius: 4px;
+        }
+
+        /* --- Images --- */
+        #tennis {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* --- Countdown Section --- */
+        .countdown-section {
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 15px 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+        }
+        .card span {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #002d62;
+        }
+        .card p {
+            margin: 0;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #d31d32;
+            font-weight: 700;
+        }
+
+        /* --- Form Styling --- */
+        #guessForm {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin: 30px auto;
+            text-align: left;
+        }
+        input[type="text"], input[type="email"], input[type="tel"], input[type="number"] {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #002d62;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #004080; }
+
+        /* --- Footer Fix (Sleek & Professional) --- */
+        footer {
+            background-color: #002d62;
+            padding: 15px 10px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 40px;
+        }
+        footer p {
+            color: white;
+            margin: 0;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 480px) {
+            .card span { font-size: 1.4rem; }
+            .card p { font-size: 0.6rem; }
+            footer { padding: 10px 5px; }
+            footer p { font-size: 11px; } /* Smallest text for mobile to fit one line */
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="DDF.jpg" alt="Logo" />
+                <span>Dubai Duty Free Tennis</span>
+            </div>
+        </div>
+    </nav>
     
     <div class="container">
-      <header>
-        <h1>Dubai Duty Free Tennis Championships</h1>
-        <img src="IMG_1792.jpg" alt="guess the ball" id="tennis" />
-        <p>Guess the Number of Balls and Win Exciting Prizes!</p>
-      </header>
-<div class="countdown-section">
-  <div class="timer-grid">
-    <div class="card">
-      <span id="days">00</span>
-      <p>Days</p>
+        <header>
+            <h1>Dubai Duty Free Tennis Championships</h1>
+            <img src="IMG_1792.jpg" alt="guess the ball" id="tennis" />
+            <p>Guess the Number of Balls and Win Exciting Prizes!</p>
+        </header>
+
+        <div class="countdown-section">
+            <div class="timer-grid">
+                <div class="card"><span id="days">00</span><p>Days</p></div>
+                <div class="card"><span id="hours">00</span><p>Hours</p></div>
+                <div class="card"><span id="minutes">00</span><p>Mins</p></div>
+                <div class="card"><span id="seconds">00</span><p>Secs</p></div>
+            </div>
+        </div>
+
+        <main> 
+            <form id="guessForm" novalidate>
+                <input type="text" name="name" id="name" placeholder="Name" required pattern="^[A-Za-z\s]+$" />
+                <input type="email" name="email" id="email" placeholder="Email" required />
+                <input type="tel" name="mobile" id="mobile" placeholder="Mobile Number" required pattern="^(\+971|0)?5[0-9]{8}$" />
+                
+                <input type="number" name="guess" id="guess" placeholder="Your Guess" required min="0" oninput="if(this.value<0)this.value=0" />
+              
+                <label style="display:flex; align-items:flex-start; gap:8px; margin-top:10px; line-height:1.4; font-size: 13px;">
+                    <input type="checkbox" id="acknowledge" required />
+                    <span>
+                        I acknowledge that the information collected will be used solely for the competition. 
+                        Read our <a href="#" style="color: #002d62;">Privacy Policy</a>.
+                    </span>
+                </label>
+
+                <button type="submit">Submit Guess</button>
+            </form>
+        </main>
     </div>
-    <div class="card">
-      <span id="hours">00</span>
-      <p>Hours</p>
-    </div>
-    <div class="card">
-      <span id="minutes">00</span>
-      <p>Mins</p>
-    </div>
-    <div class="card">
-      <span id="seconds">00</span>
-      <p>Secs</p>
-    </div>
-  </div>
-</div>
 
-<style>
-/* 1. Limit the width so it doesn't take over the whole page */
-.countdown-section {
-  max-width: 600px;
-  margin: 20px auto; /* Centers the whole block */
-  padding: 10px;
-}
+    <footer>
+        <p>&copy; 2026 Dubai Duty Free Tennis. All Rights Reserved.</p>
+    </footer>
 
-/* 2. Responsive Grid: Boxes side-by-side, but stack on tiny screens */
-.timer-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
+    <script>
+        // COUNTDOWN LOGIC
+        const target = new Date("March 15, 2026 00:00:00").getTime();
 
-.card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 15px 5px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border: 1px solid #eee;
-}
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = target - now;
 
-/* 3. Smaller, professional typography */
-.card span {
-  display: block;
-  font-size: 1.8rem; /* Scaled down from the previous version */
-  font-weight: bold;
-  color: #002d62;
-}
+            if (diff > 0) {
+                document.getElementById('days').innerText = Math.floor(diff / 86400000);
+                document.getElementById('hours').innerText = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+            } else {
+                document.querySelectorAll('.card span').forEach(el => el.innerText = "00");
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
 
-.card p {
-  margin: 0;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  color: #d31d32;
-  font-weight: 600;
-}
-
-/* 4. Mobile fix: If the screen is too small, make font smaller */
-@media (max-width: 400px) {
-  .card span { font-size: 1.2rem; }
-  .card p { font-size: 0.6rem; }
-}
-</style>
-
-<script>
-// Logic synced to March 15, 2026
-const target = new Date("March 15, 2026 00:00:00").getTime();
-
-function update() {
-  const now = new Date().getTime();
-  const diff = target - now;
-
-  if (diff > 0) {
-
-
-    document.getElementById('days').innerText = Math.floor(diff / 86400000);
-    document.getElementById('hours').innerText = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
-    document.getElementById('minutes').innerText = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-    document.getElementById('seconds').innerText = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-  }
-}
-setInterval(update, 1000);
-update();
-</script>
-      <main> 
-        <form id="guessForm" novalidate>
-          <input 
-            type="text" 
-            name="name" 
-            id="name"
-            placeholder="Name" 
-            required 
-            pattern="^[A-Za-z\s]+$"
-            title="Name should contain only letters and spaces"
-          />
-
-        <input 
-          type="email" 
-          name="email" 
-          id="email"
-          placeholder="Email" 
-          required 
-        />
-      
-        <input
-          type="tel"
-          name="mobile"
-          id="mobile"
-          placeholder="Mobile Number"
-          required
-          pattern="^(\+971|0)?5[0-9]{8}$"
-          title="Enter a valid UAE mobile number (e.g., 0501234567 or +971501234567)"
-        />
-      
-        <input 
-          type="number" 
-          name="guess" 
-          id="guess"
-          placeholder="Your Guess" 
-          required 
-        />
-      
-        <!-- Acknowledgement Checkbox Same Line -->
-        <label style="display:flex; align-items:flex-start; gap:8px; margin-top:10px; line-height:1.4;">
-          <input
-            type="checkbox"
-            id="acknowledge"
-            required
-          />
-          <span>
-          I acknowledge that the information collected in this form will be used solely to process
-              the submission for the xxxxxxxx “Guess the Number of Balls” competition. 
-              It will be accessible only to authorized personnel who require it to administer the competition 
-              and maintain the system. All data will be handled in accordance with the 
-          <a href="xxxxx" target="_blank">xxxxx Privacy Policy</a>.</span>
-        </label>
-
-
-        <button type="submit">Submit</button>
-    </form>
-
-
-      </main>
-    </div>
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-content">
-      <p>© 2026 Dubai Duty Free Tennis. All Rights Reserved.</p>
-      <div class="social-icons">
-     
-      </div>
-    </div>
-  </footer>
-    
-    <script src="script.js"></script>
-  </body>
+        // FORM SUBMISSION LOGIC
+        document.getElementById('guessForm').addEventListener('submit', function(e) {
+            if (!this.checkValidity()) {
+                e.preventDefault();
+                alert("Please correct the errors in the form before submitting.");
+            }
+        });
+    </script>
+</body>
 </html>

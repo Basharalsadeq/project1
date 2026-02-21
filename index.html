@@ -31,7 +31,94 @@
         <img src="IMG_1792.jpg" alt="guess the ball" id="tennis" />
         <p>Guess the Number of Balls and Win Exciting Prizes!</p>
       </header>
+<div class="countdown-section">
+  <div class="timer-grid">
+    <div class="card">
+      <span id="days">00</span>
+      <p>Days</p>
+    </div>
+    <div class="card">
+      <span id="hours">00</span>
+      <p>Hours</p>
+    </div>
+    <div class="card">
+      <span id="minutes">00</span>
+      <p>Mins</p>
+    </div>
+    <div class="card">
+      <span id="seconds">00</span>
+      <p>Secs</p>
+    </div>
+  </div>
+</div>
 
+<style>
+/* 1. Limit the width so it doesn't take over the whole page */
+.countdown-section {
+  max-width: 600px;
+  margin: 20px auto; /* Centers the whole block */
+  padding: 10px;
+}
+
+/* 2. Responsive Grid: Boxes side-by-side, but stack on tiny screens */
+.timer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 15px 5px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid #eee;
+}
+
+/* 3. Smaller, professional typography */
+.card span {
+  display: block;
+  font-size: 1.8rem; /* Scaled down from the previous version */
+  font-weight: bold;
+  color: #002d62;
+}
+
+.card p {
+  margin: 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #d31d32;
+  font-weight: 600;
+}
+
+/* 4. Mobile fix: If the screen is too small, make font smaller */
+@media (max-width: 400px) {
+  .card span { font-size: 1.2rem; }
+  .card p { font-size: 0.6rem; }
+}
+</style>
+
+<script>
+// Logic synced to March 15, 2026
+const target = new Date("March 15, 2026 00:00:00").getTime();
+
+function update() {
+  const now = new Date().getTime();
+  const diff = target - now;
+
+  if (diff > 0) {
+
+
+    document.getElementById('days').innerText = Math.floor(diff / 86400000);
+    document.getElementById('hours').innerText = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+    document.getElementById('minutes').innerText = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+    document.getElementById('seconds').innerText = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+  }
+}
+setInterval(update, 1000);
+update();
+</script>
       <main> 
         <form id="guessForm" novalidate>
           <input 
@@ -78,12 +165,11 @@
             required
           />
           <span>
-          The information collected in this form will be used solely to process
-          your submission for the xxxxxxxx “Guess the Number of
-          Balls” competition. It will be accessible only to authorized personel
-          who require it to administer the competition and maintain the system.
-          All data will be handled in accordance with the xxxxxxxx
-          Privacy Policy <a href="#">privacy policy</a>. </span>
+          I acknowledge that the information collected in this form will be used solely to process
+              the submission for the xxxxxxxx “Guess the Number of Balls” competition. 
+              It will be accessible only to authorized personnel who require it to administer the competition 
+              and maintain the system. All data will be handled in accordance with the 
+          <a href="xxxxx" target="_blank">xxxxx Privacy Policy</a>.</span>
         </label>
 
 

@@ -1,6 +1,6 @@
 // 1. SET THE TARGET DATE
 // Tomorrow, Feb 23, 2026 at 10:00 AM
-const targetDate = new Date("February 23, 2026 10:00:00").getTime();
+const targetDate = new Date("February 28, 2026 10:00:00").getTime();
 
 // 2. THE COUNTDOWN FUNCTION
 const updateCountdown = setInterval(function () {
@@ -133,3 +133,6 @@ function closeModal() {
     modal.style.display = "none";
   }
 }
+return ContentService.createTextOutput(
+  JSON.stringify({ status: "success" }),
+).setMimeType(ContentService.MimeType.JSON);

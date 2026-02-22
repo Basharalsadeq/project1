@@ -4,212 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dubai Duty Free Tennis - Guess the Balls</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
     <style>
-      /* --- General Layout --- */
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: "Segoe UI", Arial, sans-serif;
-        background-color: #f4f7f6;
-        color: #333;
-      }
+      body { margin: 0; padding: 0; font-family: "Segoe UI", Arial, sans-serif; background-color: #f4f7f6; color: #333; }
+      .container { max-width: 800px; margin: 0 auto; padding: 20px; text-align: center; }
+      .navbar { background-color: #002d62; padding: 10px 20px; color: white; }
+      .nav-container { display: flex; align-items: center; justify-content: center; }
+      .logo img { height: 40px; margin: 0 5px; border-radius: 4px; }
+      #tennis { width: 100%; max-width: 500px; border-radius: 12px; margin: 20px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+      
+      /* Countdown Styles */
+      .countdown-section { max-width: 500px; margin: 20px auto; }
+      .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+      .card { background: #fff; border-radius: 8px; padding: 15px 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #eee; }
+      .card span { display: block; font-size: 1.8rem; font-weight: bold; color: #002d62; }
+      .card p { margin: 0; font-size: 0.7rem; text-transform: uppercase; color: #d31d32; font-weight: 700; }
 
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        text-align: center;
-      }
+      /* Form Styles */
+      #guessForm { display: flex; flex-direction: column; gap: 15px; max-width: 400px; margin: 30px auto; text-align: left; }
+      input { padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; width: 100%; box-sizing: border-box; }
+      button { background-color: #002d62; color: white; padding: 15px; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+      button:hover { background-color: #004080; }
+      button:disabled { background-color: #cccccc; cursor: not-allowed; }
+      
+      #successMsg { display: none; background-color: #d4edda; color: #155724; padding: 10px; border-radius: 6px; margin-top: 10px; text-align: center; font-weight: bold; }
 
-      /* --- Navbar --- */
-      .navbar {
-        background-color: #002d62;
-        padding: 10px 20px;
-        color: white;
-      }
-      .nav-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .logo img {
-        height: 40px;
-        border-radius: 4px;
-      }
-
-      /* --- Images --- */
-      #tennis {
-        width: 100%;
-        max-width: 500px;
-        border-radius: 12px;
-        margin: 20px 0;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      }
-
-      /* --- Countdown Section --- */
-      .countdown-section {
-        max-width: 500px;
-        margin: 20px auto;
-      }
-      .timer-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-      }
-      .card {
-        background: #fff;
-        border-radius: 8px;
-        padding: 15px 5px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        border: 1px solid #eee;
-      }
-      .card span {
-        display: block;
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: #002d62;
-      }
-      .card p {
-        margin: 0;
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        color: #d31d32;
-        font-weight: 700;
-      }
-
-      /* --- Form Styling --- */
-      #guessForm {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        max-width: 400px;
-        margin: 30px auto;
-        text-align: left;
-      }
-      input[type="text"],
-      input[type="email"],
-      input[type="tel"],
-      input[type="number"] {
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 16px;
-      }
-      button {
-        background-color: #002d62;
-        color: white;
-        padding: 15px;
-        border: none;
-        border-radius: 6px;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background 0.3s;
-      }
-      button:hover {
-        background-color: #004080;
-      }
-      button:disabled {
-        background-color: #cccccc;
-        cursor: not-allowed;
-      }
-
-      /* --- Footer --- */
-      footer {
-        background-color: #002d62;
-        padding: 15px 10px;
-        text-align: center;
-        width: 100%;
-        box-sizing: border-box;
-        margin-top: 40px;
-      }
-      footer p {
-        color: white;
-        margin: 0;
-        font-size: 14px;
-        font-weight: 400;
-      }
-
-      /* --- Mobile Responsiveness --- */
-      @media (max-width: 480px) {
-        .card span { font-size: 1.4rem; }
-        .card p { font-size: 0.6rem; }
-        footer p { font-size: 11px; }
-        h1 { font-size: 1.5rem; }
-      }
-
-      /* === SIMPLE POPUP === */
-      .modal-overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-        align-items: center;
-        justify-content: center;
-      }
-      .modal-overlay.active {
-        display: flex;
-      }
-      .modal-box {
-        background: #fff;
-        border-radius: 16px;
-        padding: 50px 40px;
-        max-width: 380px;
-        width: 90%;
-        text-align: center;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      }
-      .modal-check {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        border: 3px solid #4caf50;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 24px;
-      }
-      .modal-check svg {
-        width: 40px;
-        height: 40px;
-      }
-      .modal-box h2 {
-        font-size: 1.6rem;
-        font-weight: 800;
-        color: #222;
-        margin: 0 0 12px;
-      }
-      .modal-box p {
-        font-size: 0.95rem;
-        color: #666;
-        margin: 0;
-        line-height: 1.6;
-      }
+      footer { background-color: #002d62; padding: 15px 10px; text-align: center; margin-top: 40px; color: white; font-size: 14px; }
     </style>
   </head>
   <body>
-
-    <!-- POPUP MODAL -->
-    <div class="modal-overlay" id="thankYouModal">
-      <div class="modal-box">
-        <h2>Thank You!</h2>
-        <p>Your guess has been successfully submitted.<br>Good luck!</p>
-      </div>
-    </div>
-
     <nav class="navbar">
       <div class="nav-container">
-        <div class="logo">
-          <img src="logo1.jpg" alt="Logo" />
-          <img src="logo2.jpg" alt="Logo 2" />
-        </div>
+        <div class="logo"><img src="logo1.jpg"><img src="logo2.jpg"></div>
       </div>
     </nav>
 
@@ -222,132 +47,83 @@
 
       <div class="countdown-section">
         <div class="timer-grid">
-          <div class="card">
-            <span id="days">00</span>
-            <p>Days</p>
-          </div>
-          <div class="card">
-            <span id="hours">00</span>
-            <p>Hours</p>
-          </div>
-          <div class="card">
-            <span id="minutes">00</span>
-            <p>Mins</p>
-          </div>
-          <div class="card">
-            <span id="seconds">00</span>
-            <p>Secs</p>
-          </div>
+          <div class="card"><span id="days">00</span><p>Days</p></div>
+          <div class="card"><span id="hours">00</span><p>Hours</p></div>
+          <div class="card"><span id="minutes">00</span><p>Mins</p></div>
+          <div class="card"><span id="seconds">00</span><p>Secs</p></div>
         </div>
       </div>
 
       <main>
         <form id="guessForm">
-          <input type="text"   name="name"   placeholder="Name"          required pattern="^[A-Za-z\s]+$" />
-          <input type="email"  name="email"  placeholder="Email"         required />
-          <input type="tel"    name="mobile" placeholder="Mobile Number" required pattern="^(\+971|0)?5[0-9]{8}$" />
-          <input type="number" name="guess"  placeholder="Your Guess"    required min="1" />
-
-          <label style="display:flex;align-items:flex-start;gap:8px;margin-top:10px;line-height:1.4;font-size:13px;">
-            <input type="checkbox" id="acknowledge" required />
-            <span>
-              I acknowledge that the information collected in this form will be used solely to process
-              the submission for the "Guess the Number of Balls" competition.
-              It will be accessible only to authorized personnel who require it to administer the competition
-              and maintain the system. All data will be handled in accordance with the
-              <a href="xxxxx" target="_blank">Privacy Policy</a>.
-            </span>
+          <input type="text" name="name" placeholder="Name" required pattern="^[A-Za-z\s]+$" />
+          <input type="email" name="email" placeholder="Email" required />
+          <input type="tel" name="mobile" placeholder="Mobile Number" required pattern="^(\+971|0)?5[0-9]{8}$" />
+          <input type="number" name="guess" placeholder="Your Guess" required min="1" />
+          <label style="font-size: 12px; display: flex; align-items: flex-start; gap: 8px;">
+            <input type="checkbox" required> I acknowledge the competition rules.
           </label>
-
           <button type="submit" id="submitBtn">Submit Guess</button>
+          <div id="successMsg">Success! Your guess has been recorded.</div>
         </form>
       </main>
     </div>
 
-    <footer>
-      <p>&copy; 2026 Dubai Duty Free Tennis. All Rights Reserved.</p>
-    </footer>
+    <footer><p>&copy; 2026 Dubai Duty Free Tennis. All Rights Reserved.</p></footer>
 
     <script>
-      // --- 1. TOURNAMENT COUNTDOWN LOGIC ---
+      // 1. COUNTDOWN LOGIC (Ends Tomorrow at 10 AM)
       const targetDate = new Date("February 23, 2026 10:00:00").getTime();
 
-      function runCountdown() {
+      const countdownInterval = setInterval(function() {
         const now = new Date().getTime();
         const distance = targetDate - now;
 
         if (distance < 0) {
-          document.getElementById("days").innerText = "0";
-          document.getElementById("hours").innerText = "00";
-          document.getElementById("minutes").innerText = "00";
-          document.getElementById("seconds").innerText = "00";
-          const timerGrid = document.querySelector(".timer-grid");
-          if (timerGrid) timerGrid.innerHTML = "<h2 style='color:#d31d32;grid-column:1/-1;'>COMPETITION CLOSED</h2>";
-          clearInterval(countdownTimer);
+          clearInterval(countdownInterval);
+          document.querySelector(".timer-grid").innerHTML = "<h2 style='color:#d31d32; grid-column: 1/-1;'>COMPETITION CLOSED</h2>";
+          document.getElementById("submitBtn").disabled = true;
           return;
         }
 
+        // Calculations
         const d = Math.floor(distance / (1000 * 60 * 60 * 24));
         const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const s = Math.floor((distance % (1000 * 60)) / 1000);
 
+        // Display results
         document.getElementById("days").innerText = d;
-        document.getElementById("hours").innerText = String(h).padStart(2, "0");
-        document.getElementById("minutes").innerText = String(m).padStart(2, "0");
-        document.getElementById("seconds").innerText = String(s).padStart(2, "0");
-      }
+        document.getElementById("hours").innerText = String(h).padStart(2, '0');
+        document.getElementById("minutes").innerText = String(m).padStart(2, '0');
+        document.getElementById("seconds").innerText = String(s).padStart(2, '0');
+      }, 1000);
 
-      const countdownTimer = setInterval(runCountdown, 1000);
-      runCountdown();
-
-      // --- 2. MODAL FUNCTIONS ---
-      function showModal() {
-        const modal = document.getElementById("thankYouModal");
-        modal.classList.add("active");
-      }
-
-      function closeModal() {
-        const modal = document.getElementById("thankYouModal");
-        modal.classList.remove("active");
-      }
-
-      // Close modal if user clicks the dark overlay background
-      document.getElementById("thankYouModal").addEventListener("click", function (e) {
-        if (e.target === this) closeModal();
-      });
-
-      // --- 3. GOOGLE SHEETS CONNECTION LOGIC ---
-      const scriptURL = "https://script.google.com/macros/s/AKfycbyPaSHc73USQjirA5wTJjmxDtzqg8KjMlRIsnhmgLRnoXlL0yyoSFNWy4aztrl_JGw/exec";
+      // 2. FORM SUBMISSION (To Google Sheets)
+      const scriptURL = "https://script.google.com/macros/s/AKfycbxeo_IrqOhSijEtNK-sLvjMbw66uXJ0NZEezfbuR3njKDcvq5scCmoWS0s4y5nyfmWncg/exec";
       const form = document.getElementById("guessForm");
-      const btn  = document.getElementById("submitBtn");
+      const btn = document.getElementById("submitBtn");
+      const successMsg = document.getElementById("successMsg");
 
-      form.addEventListener("submit", (e) => {
+      form.addEventListener("submit", e => {
         e.preventDefault();
-
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
-
         btn.disabled = true;
         btn.innerText = "Sending...";
 
-        fetch(scriptURL, {
-          method: "POST",
-          body: new FormData(form),
-        })
-          .then(() => {
-            showModal();       // ← Show popup on success
-            form.reset();
-            btn.disabled = false;
-            btn.innerText = "Submit Guess";
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+          .then(response => {
+              successMsg.style.display = "block";
+              form.reset();
+              btn.innerText = "Submit Guess";
+              btn.disabled = false;
+              // Hide message after 6 seconds
+              setTimeout(() => { successMsg.style.display = "none"; }, 6000);
           })
-          .catch((error) => {
-            console.error("Error!", error.message);
-            alert("Something went wrong. Please check your connection.");
-            btn.disabled = false;
-            btn.innerText = "Submit Guess";
+          .catch(error => {
+              console.error('Error!', error.message);
+              alert("Something went wrong. Please check your connection.");
+              btn.disabled = false;
+              btn.innerText = "Submit Guess";
           });
       });
     </script>

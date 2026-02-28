@@ -222,7 +222,23 @@
           ✅ You have already submitted your guess. Only one entry per person is
           allowed.
         </div>
-        <form id="guessForm">
+        <div
+  id="closedMsg"
+  style="
+    display: none;
+    background: #f8d7da;
+    color: #721c24;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    max-width: 400px;
+    margin: 20px auto;
+  "
+>
+  ⛔ This competition is now closed. Thank you for your interest.
+        </div>
+        <form id="guessForm" style="disply:none">
           <input
             type="text"
             name="name"
